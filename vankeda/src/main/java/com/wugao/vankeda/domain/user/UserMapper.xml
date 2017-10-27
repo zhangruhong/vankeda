@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wugao.vankeda.domain.user.UserRepo">
+	
+	<!-- 用户 -->
+	<insert id="save" parameterType="com.wugao.vankeda.domain.user.User">
+		insert into T_SYS_USER(id, username, password, nickname, mobile, enabled, alipayNo)
+		values(#{id}, #{username}, #{password}, #{nickname}, #{mobile}, #{enabled}, #{alipayNo})
+	</insert>
+	<update id="update" parameterType="com.wugao.vankeda.domain.user.User">
+		update T_SYS_USER set
+			password = #{password},
+			nickname = #{nickname},
+			mobile = #{mobile},
+			enabled = #{enabled},
+			alipayNo = #{alipayNo}
+		where id = #{id}
+	</update>
+	<delete id="remove">
+		delete from T_SYS_USER where id = #{id}
+	</delete>
+	<select id="getById" resultType="com.wugao.vankeda.domain.user.User">
+		select * from T_SYS_USER where id=#{id}
+	</select>
+	<select id="getByUsername" resultType="com.wugao.vankeda.domain.user.User">
+		select * from T_SYS_USER where username=#{username}
+	</select>
+	<select id="getList" resultType="com.wugao.vankeda.domain.user.User">
+		select * from T_SYS_USER where 1=1
+		<if test="search != null and search != ''">
+			<bind name="_search" value="'%' + search + '%'" />
+			and ( username like #{_search} or nickname like #{_search} )
+		</if>
+		<if test="enabled != null">
+			and enabled = #{enabled}
+		</if>
+		order by username asc
+	</select>
+	
+</mapper>

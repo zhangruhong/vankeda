@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wugao.vankeda.domain.category.CategoryRepo">
+
+	<select id="getById" resultType="com.wugao.vankeda.domain.category.Category">
+		SELECT * FROM T_CATEGORY WHERE ID = #{id}
+	</select>
+	<insert id="save">
+		INSERT INTO T_CATEGORY(name, id, pid )
+		 VALUES(#{name}, #{id}, #{pid} )
+	</insert>
+	<update id="update">
+		UPDATE T_CATEGORY SET name = #{name}, pid = #{pid}  WHERE id = #{id}
+	</update>
+	<delete id="remove">
+		DELETE FROM T_CATEGORY WHERE ID = #{id}
+	</delete>
+	
+	<select id="getTopCategory" resultType="com.wugao.vankeda.domain.category.Category">
+		select * from T_CATEGORY where pid is null or pid = ''
+	</select>
+	
+	<select id="getChildren" resultType="com.wugao.vankeda.domain.category.Category">
+		select * from T_CATEGORY where pid = #{id}
+	</select>
+</mapper>

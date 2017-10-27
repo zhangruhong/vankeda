@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wugao.vankeda.domain.goods.GoodsRepo">
+	
+	<select id="getList" resultType="com.wugao.vankeda.domain.goods.Goods">
+		SELECT * FROM T_GOODS order by soldCountPerMonth desc
+	</select>
+	
+	<select id="getById" resultType="com.wugao.vankeda.domain.goods.Goods">
+		SELECT * FROM T_GOODS WHERE ID = #{id}
+	</select>
+	
+	<insert id="save">
+		INSERT INTO T_GOODS(name, id, soldCountPerMonth, originalPrice, incomingRate, incoming, salerWang, tbkShortUrl, tbkLongUrl, taoToken, ticketTotal, ticketLeft, ticketValue, ticketEndTime, ticketUrl, isPromotion, ticketStartTime, ticketTaoToken, ticketShortUrl, mainImageUrl, detailUrl, shopName, categoryId, categoryPid ,status, type, priceAfterTicket)
+		 VALUES(#{name}, #{id}, #{soldCountPerMonth}, #{originalPrice}, #{incomingRate}, #{incoming}, #{salerWang}, #{tbkShortUrl}, #{tbkLongUrl}, #{taoToken}, #{ticketTotal}, #{ticketLeft}, #{ticketValue}, #{ticketEndTime}, #{ticketUrl}, #{isPromotion}, #{ticketStartTime}, #{ticketTaoToken}, #{ticketShortUrl}, #{mainImageUrl}, #{detailUrl}, #{shopName}, #{categoryId}, #{categoryPid} , #{status}, #{type}, #{priceAfterTicket})
+	</insert>
+	
+	<update id="update">
+		UPDATE T_GOODS SET name = #{name}, soldCountPerMonth = #{soldCountPerMonth}, originalPrice = #{originalPrice}, incomingRate = #{incomingRate}, 
+		incoming = #{incoming}, salerWang = #{salerWang}, tbkShortUrl = #{tbkShortUrl}, tbkLongUrl = #{tbkLongUrl}, taoToken = #{taoToken}, 
+		ticketTotal = #{ticketTotal}, ticketLeft = #{ticketLeft}, ticketValue = #{ticketValue}, ticketEndTime = #{ticketEndTime}, ticketUrl = #{ticketUrl}, 
+		isPromotion = #{isPromotion}, ticketStartTime = #{ticketStartTime}, ticketTaoToken = #{ticketTaoToken}, ticketShortUrl = #{ticketShortUrl}, mainImageUrl = #{mainImageUrl}, 
+		detailUrl = #{detailUrl}, shopName = #{shopName}, categoryId = #{categoryId}, categoryPid = #{categoryPid} , status = #{status}, type = #{type}, priceAfterTicket = #{priceAfterTicket} WHERE id = #{id}
+	</update>
+	
+	<delete id="remove">
+		DELETE FROM T_GOODS WHERE ID = #{id}
+	</delete>
+	<delete id="removeAll">
+		DELETE FROM T_GOODS
+	</delete>
+	
+	<insert id="saveBatch">
+		INSERT INTO T_GOODS(name, id, soldCountPerMonth, originalPrice, incomingRate, incoming, salerWang, tbkShortUrl, tbkLongUrl, taoToken, ticketTotal, ticketLeft, ticketValue, ticketEndTime, ticketUrl, isPromotion, ticketStartTime, ticketTaoToken, ticketShortUrl, mainImageUrl, detailUrl, shopName, categoryId, categoryPid, status, type, priceAfterTicket) VALUES
+		 <foreach collection="list" item="g" separator=",">
+		 	(#{g.name}, #{g.id}, #{g.soldCountPerMonth}, #{g.originalPrice}, #{g.incomingRate}, #{g.incoming}, #{g.salerWang}, #{g.tbkShortUrl}, #{g.tbkLongUrl}, #{g.taoToken}, #{g.ticketTotal}, #{g.ticketLeft}, #{g.ticketValue}, #{g.ticketEndTime}, #{g.ticketUrl}, #{g.isPromotion}, #{g.ticketStartTime}, #{g.ticketTaoToken}, #{g.ticketShortUrl}, #{g.mainImageUrl}, #{g.detailUrl}, #{g.shopName}, #{g.categoryId}, #{g.categoryPid}, #{g.status}, #{g.type}, #{g.priceAfterTicket})
+		 </foreach>
+	</insert>
+	
+	<select id="getListBySearch" resultType="com.wugao.vankeda.domain.goods.Goods">
+		select * from T_GOODS g 
+		<where>
+			<if test="searchVo != null">
+				<if test="searchVo.categoryId != null and searchVo.categoryId != ''">
+					and g.categoryId = #{searchVo.categoryId}
+				</if>
+				<if test="searchVo.categoryPid != null and searchVo.categoryPid != ''">
+					and g.categoryPid = #{searchVo.categoryPid}
+				</if>
+				<if test="searchVo.lowerPrice != null and searchVo.lowerPrice != ''">
+					and g.originalPrice >= cast(#{searchVo.lowerPrice} as float)
+				</if>
+				<if test="searchVo.higherPrice != null and searchVo.higherPrice != ''">
+					and g.originalPrice &lt;= cast(#{searchVo.higherPrice} as float)
+				</if>
+				<if test="searchVo.name != null and searchVo.name != ''">
+					and name like concat('%', #{searchVo.name}, '%')
+				</if>
+				<if test="searchVo.type != null and searchVo.type != ''">
+					<if test="searchVo.type == '-1'.toString() ">
+						and g.type in (1,2)
+					</if>
+					<if test="searchVo.type == '1'.toString() || searchVo.type == '2'.toString()">
+						and g.type = #{searchVo.type}
+					</if>
+				</if>
+				and status = 1 and ticketTotal > 0 and ticketLeft > 0
+				<if test="searchVo.orderBy != null and searchVo.orderBy != ''">
+					order by ${searchVo.orderBy}
+				</if>
+				<if test="searchVo.orderType != null and searchVo.orderType != ''">
+					${searchVo.orderType}
+				</if>
+			</if>
+		</where>
+			
+	</select>
+	
+</mapper>

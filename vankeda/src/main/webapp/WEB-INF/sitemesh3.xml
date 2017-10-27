@@ -1,0 +1,6 @@
+<sitemesh>
+
+	<!-- 默认装饰页面 -->
+	<mapping path="/v/**" decorator="/WEB-INF/view/decorator/frame.jsp"></mapping>
+	
+</sitemesh>

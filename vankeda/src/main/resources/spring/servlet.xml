@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"  >
+	
+	<task:annotation-driven/> 
+	
+	<context:component-scan base-package="com.wugao" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	
+	<mvc:default-servlet-handler />
+	<mvc:view-controller path="/" view-name="redirect: /v/index" />
+	<mvc:view-controller path="/admin" view-name="redirect: /admin/home" />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*.html" />
+			<mvc:mapping path="/**/*.css" />
+			<mvc:mapping path="/**/*.js" />
+			
+			<mvc:mapping path="/**/*.png" />
+			<mvc:mapping path="/**/*.gif" />
+			<mvc:mapping path="/**/*.jpg" />
+			<mvc:mapping path="/**/*.jpeg" />
+			
+			<mvc:mapping path="/**/*.woff" />
+			<mvc:mapping path="/**/*.woff2" />
+			<mvc:mapping path="/**/*.ttf" />
+			<mvc:exclude-mapping path="/root.txt"/>
+			
+			<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<property name="cacheSeconds" value="3600" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<bean id="handlerExceptionResolver" class="com.wugao.vankeda.infrastructure.spring.web.handler.HandlerExceptionResolver" />
+	
+	<!-- 处理文件请求 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	<!-- 视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">      
+	 	<property name="prefix" value="/WEB-INF/view/" />      
+	 	<property name="suffix" value=".jsp" />      
+	</bean>    
+	
+	<!-- 转换规则 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="com.wugao.vankeda.infrastructure.spring.format.DateConverter" />
+            </list>
+        </property>
+    </bean>
+	
+	<!-- profiles -->
+	<beans profile="development">
+		<context:property-placeholder location="classpath:profile/development/*.properties" />
+	</beans>
+	<beans profile="test">
+		<context:property-placeholder location="classpath:profile/test/*.properties" />
+	</beans>
+	<beans profile="production">
+		<context:property-placeholder location="classpath:profile/production/*.properties" />
+	</beans>
+	
+</beans>
