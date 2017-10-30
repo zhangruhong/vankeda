@@ -226,7 +226,6 @@ ul.nav-second-level {
   height: 40px;
   margin: 0;
   z-index: 2000;
-  color: #ffffff;
   border-right: 1px solid #f50;
 }
 .navbar-form-custom .input-group-addon {

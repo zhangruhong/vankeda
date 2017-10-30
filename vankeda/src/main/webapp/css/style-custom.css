@@ -45,6 +45,16 @@ html,body{margin: 0; padding: 0;background: white!important;}
 .toolbar-fixed-r-b .toolbar-tool:not(:last-child){border-bottom: 1px solid #ccc;}
 .toolbar-fixed-r-b .toolbar-tool.show{display: block;}
 
+ul.select-bar{display: flex;flex-wrap: nowrap; justify-content: center;align-items: center;list-style: none; text-align: center;padding-top: 5px;font-size: 18px;background: linear-gradient(to bottom, rgba(244,244,244,0.3), rgba(200,200,200,0.3), rgba(244,244,244,0.3));background: -webkit-linear-gradient(top,rgba(244,244,244,0.3), rgba(200,200,200,0.3), rgba(244,244,244,0.3)); border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}
+ul.select-bar li{flex-grow: 1;}
+ul.select-bar li a{color: #f50;}
+ul.select-bar .dropdown-menu{width: calc(100% - 10px);left: 5px;box-shadow: -1px 1px 1px 1px rgba(0,0,0,0.5);}
+ul.select-bar .dropdown-menu .category-item{display: flex; flex-wrap: nowrap; justify-content: center;align-items: center;list-style: none;padding: 5px;font-size: 16px;color: #f50;}
+ul.select-bar .dropdown-menu .category-item-check{flex-basis: 30px;flex-grow: 0;text-align: center;}
+ul.select-bar .dropdown-menu .category-item-name, ul.select-bar .dropdown-menu .category-item-button{flex-grow: 1;}
+ul.select-bar .dropdown-menu .category-item-button{background: #f50; color: white;text-align: center;cursor: pointer;}
+ul.select-bar .dropdown-menu .category-item-button:hover{background: #f70;}
+
 
 
 

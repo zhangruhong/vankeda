@@ -47,14 +47,23 @@
 				<if test="searchVo.categoryPid != null and searchVo.categoryPid != ''">
 					and g.categoryPid = #{searchVo.categoryPid}
 				</if>
+				<if test="searchVo.categoryPids != null and searchVo.categoryPids.size() > 0">
+					and g.categoryPid in
+					<foreach collection="searchVo.categoryPids" item="pid" open="(" close=")" separator=",">
+						#{pid}
+					</foreach>
+				</if>
 				<if test="searchVo.lowerPrice != null and searchVo.lowerPrice != ''">
 					and g.originalPrice >= cast(#{searchVo.lowerPrice} as float)
 				</if>
 				<if test="searchVo.higherPrice != null and searchVo.higherPrice != ''">
 					and g.originalPrice &lt;= cast(#{searchVo.higherPrice} as float)
 				</if>
-				<if test="searchVo.name != null and searchVo.name != ''">
-					and name like concat('%', #{searchVo.name}, '%')
+				<if test="searchVo.keywords != null and searchVo.keywords.size() > 0">
+					and 
+					<foreach collection="searchVo.keywords" item="keyword" open="(" close=")" separator=" or ">
+						name like concat('%', #{keyword}, '%')
+					</foreach>
 				</if>
 				<if test="searchVo.type != null and searchVo.type != ''">
 					<if test="searchVo.type == '-1'.toString() ">

@@ -34,15 +34,15 @@
 					<div class="menu-image"></div>
 					<p class="menu-name">首页</p>
 				</div>
-				<div class="col-xs-3 menu-item" data-href="<%=request.getContextPath() %>/p/ticket">
+				<div class="col-xs-3 menu-item" data-href="<%=request.getContextPath() %>/v/ticket">
 					<div class="menu-image"></div>
 					<p class="menu-title">超级券</p>
 				</div>
-				<div class="col-xs-3 menu-item" data-href="<%=request.getContextPath() %>/p/tenyuan">
+				<div class="col-xs-3 menu-item" data-href="<%=request.getContextPath() %>/v/tenyuan">
 					<div class="menu-image"></div>
 					<p class="menu-title">十元购</p>
 				</div>
-				<div class="col-xs-3 menu-item" data-href="<%=request.getContextPath() %>/p/tqg">
+				<div class="col-xs-3 menu-item" data-href="<%=request.getContextPath() %>/v/tqg">
 					<div class="menu-image"></div>
 					<p class="menu-title">淘抢购</p>
 				</div>

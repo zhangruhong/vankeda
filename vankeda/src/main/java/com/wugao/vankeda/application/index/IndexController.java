@@ -14,15 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.request.TbkTpwdCreateRequest;
 import com.taobao.api.request.WirelessShareTpwdCreateRequest;
 import com.taobao.api.request.WirelessShareTpwdCreateRequest.GenPwdIsvParamDto;
+import com.taobao.api.response.TbkTpwdCreateResponse;
 import com.taobao.api.response.WirelessShareTpwdCreateResponse;
 import com.wugao.vankeda.domain.category.CategoryRepo;
 import com.wugao.vankeda.domain.goods.GoodsRepo;
 import com.wugao.vankeda.domain.vo.search.SearchVo;
 import com.wugao.vankeda.infrastructure.mybatis.Pagination;
 
-@RestController("mobile_index")
+@RestController("index")
 public class IndexController {
 	
 	@Value("${taobao.api.url}")
@@ -61,15 +63,12 @@ public class IndexController {
 	@RequestMapping(value = "index/getToken", method = RequestMethod.GET)
 	public Map<String , String> getToken(String logo, String title, String itemUrl) throws Exception{
 		TaobaoClient client = new DefaultTaobaoClient(url, lianmengAppKey, lianmengSecretKey);
-		WirelessShareTpwdCreateRequest req = new WirelessShareTpwdCreateRequest();
-		GenPwdIsvParamDto obj1 = new GenPwdIsvParamDto();
-		obj1.setLogo(logo);
-		obj1.setUrl(itemUrl);
-		obj1.setText(title);
-		req.setTpwdParam(obj1);
-		WirelessShareTpwdCreateResponse rsp = client.execute(req);
+		TbkTpwdCreateRequest req = new TbkTpwdCreateRequest();
+		req.setUrl(itemUrl);
+		req.setText(title);
+		TbkTpwdCreateResponse rsp = client.execute(req);
 		Map<String, String> result = new HashMap<>();
-		result.put("model", rsp.getModel());
+		result.put("model", rsp.getData().getModel());
 		return result;
 	}
 	

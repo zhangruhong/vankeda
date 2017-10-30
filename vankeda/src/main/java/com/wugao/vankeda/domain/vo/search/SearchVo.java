@@ -3,6 +3,8 @@ package com.wugao.vankeda.domain.vo.search;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hankcs.hanlp.HanLP;
+
 public class SearchVo {
 	
 	public static final String TYPE_NORMAL = "1";//普通
@@ -11,7 +13,7 @@ public class SearchVo {
 	
 	public static final String ORDER_PRICE = "originalPrice";
 	
-	public static final String ORDER_OFF_RATE = "priceAfterTicket";
+	public static final String ORDER_OFF_RATE = "priceAfterTicket/originalPrice";
 	
 	public static final String ORDER_SOLD = "soldCountPerMonth";
 	
@@ -32,7 +34,11 @@ public class SearchVo {
 	
 	private String name;
 	
+	private List<String> keywords = new ArrayList<>();
+	
 	private String categoryId;
+	
+	private List<String> categoryPids = new ArrayList<>();
 	
 	private String categoryPid;
 	
@@ -86,6 +92,16 @@ public class SearchVo {
 		this.name = name;
 	}
 
+	
+	public List<String> getKeywords() {
+		if(this.name != null && !"".equals(this.name)) {
+			this.keywords = HanLP.extractKeyword(this.getName(), 10);
+		}else {
+			this.keywords = new ArrayList<>();
+		}
+		return this.keywords;
+	}
+
 	public String getCategoryPid() {
 		return categoryPid;
 	}
@@ -107,7 +123,7 @@ public class SearchVo {
 
 	public String getOrderType() {
 		if(SearchVo.ORDER_TYPE.contains(this.orderType)) {
-			return this.orderBy;
+			return this.orderType;
 		}
 		return null;
 	}
@@ -115,5 +131,14 @@ public class SearchVo {
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
 	}
+
+	public List<String> getCategoryPids() {
+		return categoryPids;
+	}
+
+	public void setCategoryPids(List<String> categoryPids) {
+		this.categoryPids = categoryPids;
+	}
+
 	
 }

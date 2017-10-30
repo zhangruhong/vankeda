@@ -12,33 +12,28 @@
 </head>
 <body>
 	<div class="container-fluid p-n">
-		<form class="form-horizontal">
-			<div class="form-group">
-				<input class="form-control" name="name"/>
-			</div>
-			<ul>
+		<form id="custom-form" class="form-horizontal">
+			<ul class="select-bar">
 				<li>
-					<a href="javascript: void(0);">全部</a>
+					<a href="javascript: orderSelect('', '');">全部</a>
 				</li>
 				<li>
-					<a href="javascript: void(0);">销量</a>
+					<a href="javascript: orderSelect('soldCountPerMonth', 'desc');">销量</a>
 				</li>
 				<li>
-					<a href="javascript: void(0);">折扣</a>
+					<a href="javascript: orderSelect('priceAfterTicket/originalPrice', 'desc');">折扣</a>
 				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">筛选</a>
 					<ul class="dropdown-menu">
 						<li>
 							<div class="category-item">
-								<div class="category-item-check">
-									<input type="checkbox" name="categoryPid" value="-1"/>
-								</div>
-								<div class="category-item-name">
+								<div class="category-item-button" onclick="categorySelect(true);">
 									<span>全部</span>
 								</div>
 							</div>
 						</li>
+						<li class="divider"></li>
 						<c:forEach items="${topCategories }" var="c">
 							<li>
 								<div class="category-item">
@@ -51,6 +46,14 @@
 								</div>
 							</li>
 						</c:forEach>
+						<li class="divider"></li>
+						<li>
+							<div class="category-item">
+								<div class="category-item-button" onclick="categorySelect(true);">
+									<span>确定</span>
+								</div>
+							</div>
+						</li>
 					</ul>
 				</li>
 			</ul>
