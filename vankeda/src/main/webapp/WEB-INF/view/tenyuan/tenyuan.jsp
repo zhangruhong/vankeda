@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <title>万客达超级券 - 百万张超级券等你来抢</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/application/ticket.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/application/tenyuan.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-orange">

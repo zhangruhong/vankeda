@@ -14,8 +14,8 @@ $(function(){
 	var $row = null;
 	var load = function(){
 		$.ajax({
-			url: '/ticket/getCoupons',
-			data: {page : currentPage, name : $('[name=name]').val()},
+			url: '/tenyuan/search',
+			data: {page : currentPage, name : $('[name=name]').val(), higherPrice: 10},
 		}).done(function(objs){
 			currentPage = objs.page;
 			if(objs.list.length < pageSize){
@@ -88,6 +88,8 @@ $(function(){
 		currentScrollTop = $(document).scrollTop();
 	});
 	
+	load();
+	
 	$('#search').on('click', function(){
 		reset();
 		load();
@@ -104,9 +106,7 @@ $(function(){
 		$goodsList.empty();
 		mainLoading = true;
 		currentPage = 1;
-		total == 0;
 		isOver = false;
+		total = 0;
 	}
-	
-	load();
 });

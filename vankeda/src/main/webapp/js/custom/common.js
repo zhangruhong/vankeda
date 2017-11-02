@@ -250,5 +250,12 @@ $(function(){
 		}
 		$loginForm.trigger('submit');
 	}
+	
+	showLoading = function(){
+		$('#loading').slideUp();
+	}
+	hideLoading = function(){
+		$('#loading').slideDown();
+	}
 	init();
 });

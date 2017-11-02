@@ -53,6 +53,7 @@
 				window.open(href, '_self');
 			});
 		});
+		
 	});
 </script>
 <sitemesh:write property='head' />
@@ -61,6 +62,13 @@
 	<div class="page-wrapper" class="gray-bg" style="min-height: 375px;">
 	     <div class="wrapper wrapper-content animated fadeInRight p-n">
 			<sitemesh:write property='body' />
+			<div id="loading" class="sk-spinner sk-spinner-wave">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <div class="sk-rect5"></div>
+            </div>
 		</div>
      </div>
 	<div id="tokenModal" class="modal fade">

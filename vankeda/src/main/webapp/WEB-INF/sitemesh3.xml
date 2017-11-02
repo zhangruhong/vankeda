@@ -3,5 +3,7 @@
 	<!-- 默认装饰页面 -->
 	<mapping path="/v/**" decorator="/WEB-INF/view/decorator/frame.jsp"></mapping>
 	<mapping path="/v/ticket"  decorator="/WEB-INF/view/decorator/frame-no-header.jsp"></mapping>
+	<mapping path="/v/tenyuan"  decorator="/WEB-INF/view/decorator/frame-no-header.jsp"></mapping>
+	<mapping path="/v/tqg"  decorator="/WEB-INF/view/decorator/frame-no-header.jsp"></mapping>
 	
 </sitemesh>

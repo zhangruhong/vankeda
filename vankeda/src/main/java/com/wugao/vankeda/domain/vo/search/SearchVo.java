@@ -21,6 +21,8 @@ public class SearchVo {
 	
 	public static final String ORDER_DESC = "desc";//降序
 	
+	public static final Integer PRICE_INTERVAL = 5;
+	
 	public static List<String> ORDER_BY = new ArrayList<>();
 	public static List<String> ORDER_TYPE = new ArrayList<>();
 	static {

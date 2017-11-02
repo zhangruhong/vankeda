@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <title>万客达超级券 - 百万张超级券等你来抢</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/application/ticket.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/application/tqg.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-orange">
@@ -27,6 +27,7 @@
 			</form>
 		</div>
 	</nav>
+	
 	<div class="container-fluid">
 		<div class="menu-container">
 			<div class="row">
@@ -49,6 +50,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="container-fluid">
 		<div class="hr-line-dashed" style="border-color: #ccc;"></div>
 	</div>

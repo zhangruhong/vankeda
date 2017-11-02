@@ -11,7 +11,7 @@ $(function(){
 	/**
 	 * 初始化
 	 */
-	var init = function(){
+	var load = function(){
 		
 		$.ajax({
 			url: '/search',
@@ -60,6 +60,7 @@ $(function(){
 				}
 			});
 			mainLoading = false;
+			hideLoading();
 		}).fail(function(){
 			if(mainLoading){
 				currentPage--;
@@ -74,7 +75,8 @@ $(function(){
 	        if ($(document).scrollTop() + 100 >= $(document).height() - $(window).height() && !mainLoading) {
 	        	currentPage++;
 	        	mainLoading = true;
-	        	init();
+	        	showLoading();
+	        	load();
 	        }
 		}
 		currentScrollTop = $(document).scrollTop();
@@ -84,7 +86,7 @@ $(function(){
 		$goodsList.empty();
 		mainLoading = true;
 		currentPage = 1;
-		init();
+		load();
 	});
 	
 	$('[name=name]').on('keypress', function(e){
@@ -92,7 +94,7 @@ $(function(){
 			$goodsList.empty();
 			mainLoading = true;
 			currentPage = 1;
-			init();
+			load();
 		}
 	});
 	
@@ -102,7 +104,7 @@ $(function(){
 		$goodsList.empty();
 		mainLoading = true;
 		currentPage = 1;
-		init();
+		load();
 	}
 	
 	categorySelect = function(isAllOrNot){
@@ -122,8 +124,8 @@ $(function(){
 		$goodsList.empty();
 		mainLoading = true;
 		currentPage = 1;
-		init();
+		load();
 	}
 	
-	init();
+	load();
 });
