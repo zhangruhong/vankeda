@@ -2,27 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wugao.vankeda.domain.activity.ActivityRepo">
 
-	<select id="getById" resultType="com.wugao.vankeda.domain.activity.Activity">
-		SELECT * FROM T_ACTIVITY WHERE ID = #{id}
-	</select>
-	<insert id="save">
-		INSERT INTO T_ACTIVITY(id, name, mainImageUrl, code, imageWidth, imageHeight, startDate, endDate, status) 
-		VALUES(#{id}, #{name}, #{mainImageUrl}, #{code}, #{imageWidth}, #{imageHeight}, #{startDate}, #{endDate}, #{status})
-	</insert>
-	<update id="update">
-		UPDATE T_ACTIVITY SET name = #{name}, mainImageUrl = #{mainImageUrl}, code = #{code}, imageWidth = #{imageWidth}
-		, imageHeight = #{imageHeight}, startDate = #{startDate}, endDate = #{endDate}, status = #{status}
-		 WHERE id = #{id}
-	</update>
-	<delete id="remove">
-		DELETE FROM T_ACTIVITY WHERE ID = #{id}
-	</delete>
-	
-	<select id="getList" resultType="com.wugao.vankeda.domain.activity.Activity">
-		select * from T_ACTIVITY a
+	<select id="getActivityList" resultType="com.wugao.vankeda.domain.activity.Activity">
+		SELECT * FROM T_ACTIVITY a 
 		<where>
-			<if test="name != null and name != ''">
-				and a.name like concat('%', #{name}, '%')
+			<if test="title != null and title != ''">
+				and a.title like concat('%', #{title}, '%')
 			</if>
 			<if test="startDate != null and startDate != ''">
 				and a.startDate >= #{startDate}
@@ -33,20 +17,42 @@
 			<if test="status != null">
 				and a.status = #{status}
 			</if>
+			<if test="onBanner != null">
+				and a.onBanner = #{onBanner}
+			</if>
 		</where>
 	</select>
+	<select id="getActivityById" resultType="com.wugao.vankeda.domain.activity.Activity">
+		SELECT * FROM T_ACTIVITY WHERE ID = #{id}
+	</select>
+	<insert id="saveActivity">
+		INSERT INTO T_ACTIVITY(title, id, pictPath, onBanner, clickUrl, startDate, endDate, createDate, updateDate, status )
+		 VALUES(#{title}, #{id}, #{pictPath}, #{onBanner}, #{clickUrl}, #{startDate}, #{endDate}, #{createDate}, #{updateDate}, #{status} )
+	</insert>
+	<update id="updateActivity">
+		UPDATE T_ACTIVITY SET title = #{title}, pictPath = #{pictPath}, onBanner = #{onBanner}, clickUrl = #{clickUrl}, 
+		startDate = #{startDate}, endDate = #{endDate}, createDate = #{createDate}, updateDate = #{updateDate}, status = #{status}  WHERE id = #{id}
+	</update>
+	<delete id="removeActivity">
+		DELETE FROM T_ACTIVITY WHERE ID = #{id}
+	</delete>
 	
 	<insert id="saveActGoodsMap">
 		INSERT INTO T_ACTIVITY_GOODS(activityId, goodsId) VALUES
-		<foreach collection="list" item="g" separator=","></foreach>
-		(#{g.activityId}, #{g.goodsId})
+		<foreach collection="list" item="g" separator=",">
+			(#{g.activityId}, #{g.goodsId})
+		</foreach>
 	</insert>
 	
 	<delete id="removeGoodsFromAct">
-		DELETE FROM T_ACTIVITY_GOODS t WHERE t.activityId = #{activityId} and t.goodsId in
-		<foreach collection="ids" item="goodsId" open="(" close=")" separator=",">
-			#{goodsId}
-		</foreach>
+		DELETE FROM T_ACTIVITY_GOODS t WHERE t.activityId = #{activityId} 
+		<if test="ids != null and ids.size() > 0">
+			and t.goodsId in
+			<foreach collection="ids" item="goodsId" open="(" close=")" separator=",">
+				#{goodsId}
+			</foreach>
+		</if>
+		
 	</delete>
 	
 </mapper>

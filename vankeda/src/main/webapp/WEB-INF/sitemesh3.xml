@@ -5,5 +5,6 @@
 	<mapping path="/v/ticket"  decorator="/WEB-INF/view/decorator/frame-no-header.jsp"></mapping>
 	<mapping path="/v/tenyuan"  decorator="/WEB-INF/view/decorator/frame-no-header.jsp"></mapping>
 	<mapping path="/v/tqg"  decorator="/WEB-INF/view/decorator/frame-no-header.jsp"></mapping>
+	<mapping path="/v/admin/**"  decorator="/WEB-INF/view/decorator/frame-admin.jsp"></mapping>
 	
 </sitemesh>

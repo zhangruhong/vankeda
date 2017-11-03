@@ -197,9 +197,10 @@
 		if(!$.isPlainObject(obj)){
 			return;
 		}
+		$this.resetForm();
 		$('[name]', $this).each(function(){
 			var inputTagName = $(this)[0].tagName;
-			var inputType = $(this)[0].attr('type');
+			var inputType = $(this).attr('type');
 			var name = $(this).attr('name');
 			var value = obj[name] ? obj[name] : '';
 			if(inputTagName == 'INPUT'){
@@ -211,8 +212,17 @@
 							$('[name=' + name + '][value=' + v +']').prop('checked', 'checked');
 						})
 					}else{
-						$('[name=' + name + '][value=' + v +']').prop('checked', '');
+						$('[name=' + name + '][value=' + value +']').prop('checked', '');
 					}
+				}else if(inputType == 'day'){
+					var date = new Date(value);
+					var year = date.getFullYear();
+					var month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth();
+					var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+					var hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+					var mi = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+					var sec = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+					$(this).val(year + '-' + month + '-' + day + ' ' + hour + ':' + mi + ':' + sec);
 				}else{
 					$(this).val(value);
 				}
@@ -231,7 +241,7 @@
 		}
 		$('[name]', $this).each(function(){
 			var inputTagName = $(this)[0].tagName;
-			var inputType = $(this)[0].attr('type');
+			var inputType = $(this).attr('type');
 			if(inputTagName == 'INPUT'){
 				if(inputType == 'radio'){
 					$(this).prop('checked', false);
@@ -246,38 +256,22 @@
 				$('option[value=' + value + ']').prop('selected', '');
 			}
 		});
+		$('.file-upload').fileUpload({}, 'empty');
 	}
 	
-	$.fn.fileUpload = function(op, param){
+	$.fn.fileUpload = function(op, method){
 		var $this = $(this);
 		if(!$this.hasClass('file-upload')){return;}
-		var $input = $('<input type="file" name="upload-file-input" />').appendTo($this);
+		var $input = $('<input type="file" name="upload-file" />').appendTo($this);
 		var option = {
-			url: '/admin/fileupload',//上传url
-			removeFileUrl: '/admin/removefile',//删除url
-			downloadUrl: '/admin/filedownload',//获取url
+			url: '/common/fileupload',//上传url
+			removeFileUrl: '/common/removefile',//删除url
+			downloadUrl: '/common/filedownload',//获取url
 			dataType: 'json',//数据类型
 			inputName: 'file',//默认生成的input的name属性
 			acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,//接收的文件类型
+			files: null
 		}
-		if(!$.isPlainObject(op)){
-			if(op != ''){
-				switch(op){
-				case 'empty':
-					$this.empty();
-				case 'fill':
-					if($.isArray(param['files'])){
-						$.each(param['files'], function(i, n){
-							buildFileList(n, n.split(/(\/|\\)/)[n.split(/(\/|\\)/).length-1], option.downloadUrl, option.removeUrl, option.inputName)
-						});
-					}else if(param['files']){
-						buildFileList(param['files'], param['files'].split(/(\/|\\)/)[param['files'].split(/(\/|\\)/).length-1], option.downloadUrl, option.removeUrl, option.inputName)
-					}
-				}
-				return;
-			}
-		}
-		
 		
 		function buildFileList(filePath, fileName, downloadUrl, removeUrl, inputName){
 			var $completeDiv = $('<div class="input-group" style="margin-top: 8px;position: relative;"></div>').appendTo($this);
@@ -312,8 +306,26 @@
 		if($.isPlainObject(op)){
 			$.extend(option, op);
 		}
+		
+		if(method){
+			switch(method){
+			case 'empty':
+				$this.empty();
+				break;
+			case 'fill':
+				if($.isArray(option.files)){
+					$.each(option.files, function(i, n){
+						buildFileList(n, n.split(/(\/|\\)/)[n.split(/(\/|\\)/).length-1], option.downloadUrl, option.removeFileUrl, option.inputName)
+					});
+				}else if(option.files){
+					buildFileList(option.files, option.files.split(/(\/|\\)/)[option.files.split(/(\/|\\)/).length-1], option.downloadUrl, option.removeFileUrl, option.inputName)
+				}
+			}
+			return;
+		}
+		
 		option.done = function(e, data){
-			buildFileList(data.result['filePath'], data.result['fileName'], option.downloadUrl, option.removeUrl, option.inputName)
+			buildFileList(data.result['filePath'], data.result['fileName'], option.downloadUrl, option.removeFileUrl, option.inputName)
 		}
 		$input.fileupload(option);
 	}

@@ -24,14 +24,6 @@
 <link href="<%=request.getContextPath()%>/js/vendor/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <script src="<%=request.getContextPath()%>/js/vendor/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
-<!-- jquery weui -->
-<link href="<%=request.getContextPath()%>/js/vendor/jquery-weui/css/weui.min.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/js/vendor/jquery-weui/css/jquery-weui.min.css" rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/js/vendor/jquery-weui/js/fastclick.js"></script>
-<script src="<%=request.getContextPath()%>/js/vendor/jquery-weui/js/jquery-weui.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/vendor/jquery-weui/js/city-picker.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/vendor/jquery-weui/js/swiper.min.js"></script>
-
 <!-- font-awesome -->
 <link href="<%=request.getContextPath()%>/js/vendor/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 

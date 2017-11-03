@@ -20,15 +20,27 @@
 <!-- 引入 jQuery 库 -->
 <script src="<%=request.getContextPath()%>/js/vendor/jquery-3.1.1/jquery-3.1.1.min.js"></script>
 
+<script src="<%=request.getContextPath()%>/js/vendor/jquery-file-upload-9.18.0/js/vendor/jquery.ui.widget.js"></script>
+<script src="<%=request.getContextPath()%>/js/vendor/jquery-file-upload-9.18.0/js/jquery.fileupload.js"></script>
+
 <!-- bootstrap -->
 <link href="<%=request.getContextPath()%>/js/vendor/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <script src="<%=request.getContextPath()%>/js/vendor/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
+<!-- datetimepicker -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/vendor/bootstrap-datetimepicker-2.4.4/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/vendor/bootstrap-datetimepicker-2.4.4/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<link href="<%=request.getContextPath()%>/js/vendor/bootstrap-datetimepicker-2.4.4/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+
+<!-- icheck -->
+<link href="<%=request.getContextPath()%>/js/vendor/iCheck-1.0.2/css/custom.css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/vendor/iCheck-1.0.2/icheck.min.js"></script>
 <!-- font-awesome -->
 <link href="<%=request.getContextPath()%>/js/vendor/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<!-- zeroClipboard -->
-<script src="<%=request.getContextPath()%>/js/vendor/clipboard/clipboard.js"></script>
+<!-- sweetalert -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/vendor/sweetalert-1.1.3/sweetalert.css"/>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/vendor/sweetalert-1.1.3/sweetalert.min.js"></script>
 
 <!-- 自定义的库 -->
 <script src="<%=request.getContextPath()%>/js/custom/jquery-form/jquery.form.js"></script>
@@ -38,13 +50,11 @@
 
 <script src="<%=request.getContextPath()%>/js/custom/common.js"></script>
 <script type="text/javascript">
-	$(function(){
-		$('.menu-item').each(function(){
-			var href = $(this).data('href');
-			$(this).on('click', function(){
-				window.open(href, '_self');
-			});
-		});
+	$(function () {
+	    $('.i-checks').iCheck({
+	        checkboxClass: 'icheckbox_square-green',
+	        radioClass: 'iradio_square-green',
+	    });
 	});
 </script>
 <sitemesh:write property='head' />
@@ -123,57 +133,7 @@
 	     </div>
 	     <div class="wrapper wrapper-content animated fadeInRight p-n">
 			<sitemesh:write property='body' />
-			<div id="loading" class="sk-spinner sk-spinner-wave">
-                <div class="sk-rect1"></div>
-                <div class="sk-rect2"></div>
-                <div class="sk-rect3"></div>
-                <div class="sk-rect4"></div>
-                <div class="sk-rect5"></div>
-            </div>
 		</div>
      </div>
-	<div id="tokenModal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h5 class="modal-title"
-						style="white-space: nowrap; text-overflow: ellipsis; color: #f50;">
-						<i class="fa fa-ticket fa-lg"></i> 优惠券
-					</h5>
-				</div>
-				<div class="modal-body">
-					<div class="row"
-						style="border-bottom: 1px dashed #ccc; padding: 15px 0;">
-						<div class="col-xs-6">
-							<div id="goods-image"
-								style="height: 180px; background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
-						</div>
-						<div class="col-xs-6" style="padding: 15px;">
-							<p id="token-name"></p>
-							<p>
-								【在售价】<span id="price"></span>
-							</p>
-							<p>
-								【优惠券】<span id="ticket"></span>
-							</p>
-						</div>
-					</div>
-					<input id="copyContent" class="form-control" style="margin-top: 20px;" value="123"/>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-default" type="button" id="copyBtn" data-clipboard-target="#copyContent">复制</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="toolbar-fixed-r-b">
-		<div id="scrollToTop" class="toolbar-tool show">
-			<i class="fa fa-chevron-up"></i>
-		</div>
-		<div id="callQQ" class="toolbar-tool show">
-			<i class="fa fa-qq"></i>
-		</div>
-	</div>
 </body>
 </html>

@@ -44,8 +44,8 @@ public class HandlerExceptionResolver implements org.springframework.web.servlet
 				badRequestReason.put("applicationError", ((AppException) ex).getMessage());
 			} else {
 				log.error("处理请求时发生异常 " + request.getMethod() + " " + request.getRequestURI(), ex);
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				return new ModelAndView("redirect:/error/500");
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				badRequestReason.put("applicationError", ((AppException) ex).getMessage());
 			}
 			// for bad request
 			if (!response.isCommitted() && !badRequestReason.isEmpty()) {

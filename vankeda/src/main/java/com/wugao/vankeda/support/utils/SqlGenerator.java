@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.wugao.vankeda.domain.activity.Activity;
+
 public class SqlGenerator<T> {
 	
 	public static String[] excludeType = {"java.util.List","java.util.Set","java.util.Map"};
@@ -139,6 +141,11 @@ public class SqlGenerator<T> {
 
 	public void setConditionsMap(Map<String, String> conditionsMap) {
 		this.conditionsMap = conditionsMap;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		SqlGenerator<Activity> generator = new SqlGenerator<>("T_ACTIVITY", "Activity", Activity.class);
+		generator.generateXmlFile();
 	}
 
 }

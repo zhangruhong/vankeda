@@ -20,22 +20,22 @@ public class ActivityRepo {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	public Activity getById(String id) {
-		return sqlSessionTemplate.selectOne(NS + "getById", id);
+		return sqlSessionTemplate.selectOne(NS + "getActivityById", id);
 	}
 	
 	public Activity save(Activity activity) {
 		activity.setId(UUID.randomUUID().toString());
-		sqlSessionTemplate.insert(NS + "save", activity);
+		sqlSessionTemplate.insert(NS + "saveActivity", activity);
 		return activity;
 	}
 	
 	public Activity update(Activity activity) {
-		sqlSessionTemplate.update(NS + "update", activity);
+		sqlSessionTemplate.update(NS + "updateActivity", activity);
 		return activity;
 	}
 	
 	public void remove(String id) {
-		sqlSessionTemplate.delete(NS + "remove", id);
+		sqlSessionTemplate.delete(NS + "removeActivity", id);
 	}
 	
 	/**
@@ -55,18 +55,20 @@ public class ActivityRepo {
 		Map<String, Object> param = new HashMap<>();
 		param.put("activityId", activityId);
 		param.put("ids", ids);
-		sqlSessionTemplate.delete(NS + "saveActGoodsMap", param);
+		sqlSessionTemplate.delete(NS + "removeGoodsFromAct", param);
 	}
 	
-	public List<Activity> getList(String startDate, String endDate, Boolean status, Pagination pagination){
+	public List<Activity> getList(String title, String startDate, String endDate, Boolean status, Boolean onBanner, Pagination pagination){
 		Map<String, Object> param = new HashMap<>();
+		param.put("title", title);
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
 		param.put("status", status);
+		param.put("onBanner", onBanner);
 		if(pagination != null) {
-			return sqlSessionTemplate.selectList(NS + "getList", param, pagination.toRowBounds());
+			return sqlSessionTemplate.selectList(NS + "getActivityList", param, pagination.toRowBounds());
 		}
-		return sqlSessionTemplate.selectList(NS + "getList", param);
+		return sqlSessionTemplate.selectList(NS + "getActivityList", param);
 	}
 
 }
